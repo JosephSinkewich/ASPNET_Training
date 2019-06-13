@@ -1,0 +1,9 @@
+USE [aspnetTrainingDB]
+GO
+CREATE PROCEDURE [dbo].[GetRoles]
+AS
+BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM dbo.Roles
+END
+GO
