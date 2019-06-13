@@ -39,18 +39,32 @@ namespace DAL.Repositories.Implementations
 
         public IEnumerable<Category> GetAll()
         {
-            var categoryDataTable = helper.GetDataTable("GetCategories", CommandType.StoredProcedure);
             var categories = new List<Category>();
-
-            foreach (DataRow row in categoryDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var category = new Category
-                {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Name = row["Name"].ToString()
-                };
+                connection.Open();
 
-                categories.Add(category);
+                using (var command = new SqlCommand("GetCategories", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var category = new Category
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString()
+                            };
+
+                            categories.Add(category);
+                        }
+                    }
+
+                    reader.Close();
+                }
             }
 
             return categories;
@@ -58,25 +72,35 @@ namespace DAL.Repositories.Implementations
 
         public Category GetById(int id)
         {
+            Category category = null;
+
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", id, DbType.Int32)
             };
 
-            var categoryDataTable = helper.GetDataTable("GetCategoryById", CommandType.StoredProcedure, parameters.ToArray());
-            var categories = new List<Category>();
-
-            //make 1 return point
-            if (categoryDataTable.Rows.Count == 0)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                return null;
+                connection.Open();
+
+                using (var command = new SqlCommand("GetCategoryById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        category = new Category
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString()
+                        };
+                    }
+
+                    reader.Close();
+                }
             }
-
-            var category = new Category
-            {
-                Id = Convert.ToInt32(categoryDataTable.Rows[0]["Id"]),
-                Name = categoryDataTable.Rows[0]["Name"].ToString()
-            };
 
             return category;
         }

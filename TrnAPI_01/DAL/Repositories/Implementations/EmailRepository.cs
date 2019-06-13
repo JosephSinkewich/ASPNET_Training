@@ -17,7 +17,7 @@ namespace DAL.Repositories.Implementations
         {
             this.helper = helper;
         }
-        
+
         public void Create(Email item)
         {
             var parameters = new List<SqlParameter>
@@ -40,18 +40,32 @@ namespace DAL.Repositories.Implementations
 
         public IEnumerable<Email> GetAll()
         {
-            var emailDataTable = helper.GetDataTable("GetEmails", CommandType.StoredProcedure);
             var emails = new List<Email>();
-
-            foreach (DataRow row in emailDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var email = new Email
-                {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Address = row["Address"].ToString()
-                };
+                connection.Open();
 
-                emails.Add(email);
+                using (var command = new SqlCommand("GetEmails", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var email = new Email
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Address = reader["Address"].ToString()
+                            };
+
+                            emails.Add(email);
+                        }
+                    }
+
+                    reader.Close();
+                }
             }
 
             return emails;
@@ -59,25 +73,35 @@ namespace DAL.Repositories.Implementations
 
         public Email GetById(int id)
         {
+            Email email = null;
+
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", id, DbType.Int32)
             };
 
-            var emailDataTable = helper.GetDataTable("GetEmailById", CommandType.StoredProcedure, parameters.ToArray());
-            var emails = new List<Email>();
-
-            //make 1 return point
-            if (emailDataTable.Rows.Count == 0)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                return null;
+                connection.Open();
+
+                using (var command = new SqlCommand("GetEmailById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        email = new Email
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Address = reader["Address"].ToString()
+                        };
+                    }
+
+                    reader.Close();
+                }
             }
-
-            var email = new Email
-            {
-                Id = Convert.ToInt32(emailDataTable.Rows[0]["Id"]),
-                Address = emailDataTable.Rows[0]["Address"].ToString()
-            };
 
             return email;
         }
