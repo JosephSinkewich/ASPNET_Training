@@ -6,55 +6,55 @@ using TrnAPI_01.Models;
 
 namespace TrnAPI_01.Controllers
 {
-    public class CategoryController : ApiController
+    public class PictureController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IPictureService pictureService;
 
-        public CategoryController(ICategoryService categoryService)
+        public PictureController(IPictureService pictureService)
         {
-            this.categoryService = categoryService;
+            this.pictureService = pictureService;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Picture> Get()
         {
-            return categoryService.GetAll();
+            return pictureService.GetAll();
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            Category category = categoryService.GetById(id);
-            if (category == null)
+            Picture picture = pictureService.GetById(id);
+            if (picture == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(picture);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
+        public IHttpActionResult Post([FromBody]CreatePictureViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            Category category = new Category
+            Picture picture = new Picture
             {
-                Name = model.Name
+                Path = model.Path
             };
 
-            categoryService.Create(category);
-            
+            pictureService.Create(picture);
+
             return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Category model)
+        public IHttpActionResult Put(int id, [FromBody]Picture model)
         {
             if (model == null)
             {
@@ -65,7 +65,7 @@ namespace TrnAPI_01.Controllers
                 return BadRequest();
             }
 
-            categoryService.Update(model);
+            pictureService.Update(model);
             return Ok();
         }
 
@@ -73,7 +73,7 @@ namespace TrnAPI_01.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            categoryService.Delete(id);
+            pictureService.Delete(id);
             return Ok();
         }
     }

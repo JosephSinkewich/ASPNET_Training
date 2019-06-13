@@ -6,55 +6,56 @@ using TrnAPI_01.Models;
 
 namespace TrnAPI_01.Controllers
 {
-    public class CategoryController : ApiController
+    public class EventController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IEventService eventService;
 
-        public CategoryController(ICategoryService categoryService)
+        public EventController(IEventService eventService)
         {
-            this.categoryService = categoryService;
+            this.eventService = eventService;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Event> Get()
         {
-            return categoryService.GetAll();
+            return eventService.GetAll();
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            Category category = categoryService.GetById(id);
-            if (category == null)
+            Event eventInst = eventService.GetById(id);
+            if (eventInst == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(eventInst);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
+        public IHttpActionResult Post([FromBody]CreateEventViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            Category category = new Category
+            Event eventInst = new Event
             {
-                Name = model.Name
+                Name = model.Name,
+                RecordId = model.RecordId
             };
 
-            categoryService.Create(category);
-            
+            eventService.Create(eventInst);
+
             return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Category model)
+        public IHttpActionResult Put(int id, [FromBody]Event model)
         {
             if (model == null)
             {
@@ -65,7 +66,7 @@ namespace TrnAPI_01.Controllers
                 return BadRequest();
             }
 
-            categoryService.Update(model);
+            eventService.Update(model);
             return Ok();
         }
 
@@ -73,7 +74,7 @@ namespace TrnAPI_01.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            categoryService.Delete(id);
+            eventService.Delete(id);
             return Ok();
         }
     }

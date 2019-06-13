@@ -6,55 +6,59 @@ using TrnAPI_01.Models;
 
 namespace TrnAPI_01.Controllers
 {
-    public class CategoryController : ApiController
+    public class RecordController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IRecordService recordService;
 
-        public CategoryController(ICategoryService categoryService)
+        public RecordController(IRecordService recordService)
         {
-            this.categoryService = categoryService;
+            this.recordService = recordService;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Record> Get()
         {
-            return categoryService.GetAll();
+            return recordService.GetAll();
         }
 
-        // GET api/<controller>/5
-        [HttpGet]
+       // GET api/<controller>/5
+       [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            Category category = categoryService.GetById(id);
-            if (category == null)
+            Record record = recordService.GetById(id);
+            if (record == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(record);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
+        public IHttpActionResult Post([FromBody]CreateRecordViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            Category category = new Category
+            Record record = new Record
             {
-                Name = model.Name
+                Name = model.Name,
+                CreateDate = model.CreateDate,
+                Description = model.Description,
+                CategoryId = model.CategoryId,
+                PictureId = model.PictureId
             };
 
-            categoryService.Create(category);
-            
+            recordService.Create(record);
+
             return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Category model)
+        public IHttpActionResult Put(int id, [FromBody]Record model)
         {
             if (model == null)
             {
@@ -65,7 +69,7 @@ namespace TrnAPI_01.Controllers
                 return BadRequest();
             }
 
-            categoryService.Update(model);
+            recordService.Update(model);
             return Ok();
         }
 
@@ -73,7 +77,7 @@ namespace TrnAPI_01.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            categoryService.Delete(id);
+            recordService.Delete(id);
             return Ok();
         }
     }

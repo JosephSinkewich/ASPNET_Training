@@ -165,10 +165,22 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\PictureController.cs" />
+    <Compile Include="Controllers\RecordController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CreateCategoryViewModel.cs" />
+    <Compile Include="Models\CreateEmailViewModel.cs" />
+    <Compile Include="Models\CreateEventViewModel.cs" />
+    <Compile Include="Models\CreatePictureViewModel.cs" />
+    <Compile Include="Models\CreateRecordViewModel.cs" />
+    <Compile Include="Models\CreateRoleViewModel.cs" />
+    <Compile Include="Models\CreateUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
