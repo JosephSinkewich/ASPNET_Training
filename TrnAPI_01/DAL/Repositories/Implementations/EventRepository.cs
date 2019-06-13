@@ -41,19 +41,33 @@ namespace DAL.Repositories.Implementations
 
         public IEnumerable<Event> GetAll()
         {
-            var eventDataTable = helper.GetDataTable("GetEvents", CommandType.StoredProcedure);
             var events = new List<Event>();
-
-            foreach (DataRow row in eventDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var eventInst = new Event
-                {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Name = row["Name"].ToString(),
-                    RecordId = Convert.ToInt32(row["RecordId"])
-                };
+                connection.Open();
 
-                events.Add(eventInst);
+                using (var command = new SqlCommand("GetEvents", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var eventInst = new Event
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString(),
+                                RecordId = Convert.ToInt32(reader["RecordId"])
+                            };
+
+                            events.Add(eventInst);
+                        }
+                    }
+
+                    reader.Close();
+                }
             }
 
             return events;
@@ -61,46 +75,68 @@ namespace DAL.Repositories.Implementations
 
         public Event GetById(int id)
         {
+            Event eventInst = null;
+
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", id, DbType.Int32)
             };
 
-            var eventDataTable = helper.GetDataTable("GetEventById", CommandType.StoredProcedure, parameters.ToArray());
-            var events = new List<Event>();
-
-            //make 1 return point
-            if (eventDataTable.Rows.Count == 0)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                return null;
+                connection.Open();
+
+                using (var command = new SqlCommand("GetEventById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        eventInst = new Event
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                            RecordId = Convert.ToInt32(reader["RecordId"])
+                        };
+                    }
+
+                    reader.Close();
+                }
             }
-
-            var eventInst = new Event
-            {
-                Id = Convert.ToInt32(eventDataTable.Rows[0]["Id"]),
-                Name = eventDataTable.Rows[0]["Name"].ToString(),
-                RecordId = Convert.ToInt32(eventDataTable.Rows[0]["RecordId"])
-            };
 
             return eventInst;
         }
 
         public IEnumerable<Event> GetEventsByRecordId(int recordId)
         {
-            var eventDataTable = helper.GetDataTable("GetEvents", CommandType.StoredProcedure);
             var events = new List<Event>();
-
-            foreach (DataRow row in eventDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var eventInst = new Event
+                connection.Open();
+
+                using (var command = new SqlCommand("GetEventsByRecordId", connection))
                 {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Name = row["Name"].ToString(),
-                    RecordId = Convert.ToInt32(row["RecordId"])
-                };
-                if (eventInst.RecordId == recordId)
-                {
-                    events.Add(eventInst);
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var eventInst = new Event
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString(),
+                                RecordId = Convert.ToInt32(reader["RecordId"])
+                            };
+
+                            events.Add(eventInst);
+                        }
+                    }
+
+                    reader.Close();
                 }
             }
 

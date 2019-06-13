@@ -40,18 +40,32 @@ namespace DAL.Repositories.Implementations
 
         public IEnumerable<Picture> GetAll()
         {
-            var pictureDataTable = helper.GetDataTable("GetPictures", CommandType.StoredProcedure);
             var pictures = new List<Picture>();
-
-            foreach (DataRow row in pictureDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var picture = new Picture
-                {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Path = row["Path"].ToString()
-                };
+                connection.Open();
 
-                pictures.Add(picture);
+                using (var command = new SqlCommand("GetPictures", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var picture = new Picture
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Path = reader["Path"].ToString()
+                            };
+
+                            pictures.Add(picture);
+                        }
+                    }
+
+                    reader.Close();
+                }
             }
 
             return pictures;
@@ -59,27 +73,37 @@ namespace DAL.Repositories.Implementations
 
         public Picture GetById(int id)
         {
+            Picture picture = null;
+
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", id, DbType.Int32)
             };
 
-            var picureDataTable = helper.GetDataTable("GetPicureById", CommandType.StoredProcedure, parameters.ToArray());
-            var picures = new List<Picture>();
-
-            //make 1 return point
-            if (picureDataTable.Rows.Count == 0)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                return null;
+                connection.Open();
+
+                using (var command = new SqlCommand("GetPictureById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        picture = new Picture
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Path = reader["Path"].ToString()
+                        };
+                    }
+
+                    reader.Close();
+                }
             }
 
-            var picure = new Picture
-            {
-                Id = Convert.ToInt32(picureDataTable.Rows[0]["Id"]),
-                Path = picureDataTable.Rows[0]["Path"].ToString()
-            };
-
-            return picure;
+            return picture;
         }
 
         public void Update(Picture item)

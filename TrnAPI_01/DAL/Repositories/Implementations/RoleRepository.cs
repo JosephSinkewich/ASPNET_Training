@@ -39,18 +39,32 @@ namespace DAL.Repositories.Implementations
 
         public IEnumerable<Role> GetAll()
         {
-            var roleDataTable = helper.GetDataTable("GetRoles", CommandType.StoredProcedure);
             var roles = new List<Role>();
-
-            foreach (DataRow row in roleDataTable.Rows)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                var role = new Role
-                {
-                    Id = Convert.ToInt32(row["Id"]),
-                    Name = row["Name"].ToString()
-                };
+                connection.Open();
 
-                roles.Add(role);
+                using (var command = new SqlCommand("GetRoles", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            var role = new Role
+                            {
+                                Id = Convert.ToInt32(reader["Id"]),
+                                Name = reader["Name"].ToString()
+                            };
+
+                            roles.Add(role);
+                        }
+                    }
+
+                    reader.Close();
+                }
             }
 
             return roles;
@@ -58,25 +72,35 @@ namespace DAL.Repositories.Implementations
 
         public Role GetById(int id)
         {
-            var parameters = new SqlParameter[]
+            Role role = null;
+
+            var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", id, DbType.Int32)
             };
 
-            var roleDataTable = helper.GetDataTable("GetRoleById", CommandType.StoredProcedure, parameters);
-            var roles = new List<Role>();
-
-            //make 1 return point
-            if (roleDataTable.Rows.Count == 0)
+            using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
-                return null;
+                connection.Open();
+
+                using (var command = new SqlCommand("GetRoleById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        role = new Role
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                        };
+                    }
+
+                    reader.Close();
+                }
             }
-
-            var role = new Role
-            {
-                Id = Convert.ToInt32(roleDataTable.Rows[0]["Id"]),
-                Name = roleDataTable.Rows[0]["Name"].ToString()
-            };
 
             return role;
         }
