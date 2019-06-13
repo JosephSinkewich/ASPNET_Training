@@ -6,55 +6,55 @@ using TrnAPI_01.Models;
 
 namespace TrnAPI_01.Controllers
 {
-    public class CategoryController : ApiController
+    public class RoleController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IRoleService roleService;
 
-        public CategoryController(ICategoryService categoryService)
+        public RoleController(IRoleService roleService)
         {
-            this.categoryService = categoryService;
+            this.roleService = roleService;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<Role> Get()
         {
-            return categoryService.GetAll();
+            return roleService.GetAll();
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            Category category = categoryService.GetById(id);
-            if (category == null)
+            Role role = roleService.GetById(id);
+            if (role == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(role);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
+        public IHttpActionResult Post([FromBody]CreateRoleViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            Category category = new Category
+            Role role = new Role
             {
                 Name = model.Name
             };
 
-            categoryService.Create(category);
-            
+            roleService.Create(role);
+
             return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Category model)
+        public IHttpActionResult Put(int id, [FromBody]Role model)
         {
             if (model == null)
             {
@@ -65,7 +65,7 @@ namespace TrnAPI_01.Controllers
                 return BadRequest();
             }
 
-            categoryService.Update(model);
+            roleService.Update(model);
             return Ok();
         }
 
@@ -73,7 +73,7 @@ namespace TrnAPI_01.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            categoryService.Delete(id);
+            roleService.Delete(id);
             return Ok();
         }
     }

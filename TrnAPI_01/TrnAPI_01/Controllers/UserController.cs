@@ -6,55 +6,58 @@ using TrnAPI_01.Models;
 
 namespace TrnAPI_01.Controllers
 {
-    public class CategoryController : ApiController
+    public class UserController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IUserService userService;
 
-        public CategoryController(ICategoryService categoryService)
+        public UserController(IUserService userService)
         {
-            this.categoryService = categoryService;
+            this.userService = userService;
         }
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IEnumerable<User> Get()
         {
-            return categoryService.GetAll();
+            return userService.GetAll();
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
-            Category category = categoryService.GetById(id);
-            if (category == null)
+            User user = userService.GetById(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return Ok(category);
+            return Ok(user);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
+        public IHttpActionResult Post([FromBody]CreateUserViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
-            Category category = new Category
+            User user = new User
             {
-                Name = model.Name
+                Name = model.Name,
+                Password = model.Password,
+                RoleId = model.RoleId,
+                EmailId = model.EmailId
             };
 
-            categoryService.Create(category);
-            
+            userService.Create(user);
+
             return Ok();
         }
 
         // PUT api/<controller>/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Category model)
+        public IHttpActionResult Put(int id, [FromBody]User model)
         {
             if (model == null)
             {
@@ -65,7 +68,7 @@ namespace TrnAPI_01.Controllers
                 return BadRequest();
             }
 
-            categoryService.Update(model);
+            userService.Update(model);
             return Ok();
         }
 
@@ -73,7 +76,7 @@ namespace TrnAPI_01.Controllers
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
-            categoryService.Delete(id);
+            userService.Delete(id);
             return Ok();
         }
     }

@@ -1,10 +1,6 @@
 ﻿using BLL.Services.Interfaces;
 using Common.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using TrnAPI_01.Models;
 
@@ -37,7 +33,6 @@ namespace TrnAPI_01.Controllers
             }
             return Ok(email);
         }
-        //                                                 id not nullable
 
         // POST api/<controller>
         [HttpPost]
