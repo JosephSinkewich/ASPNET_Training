@@ -6,11 +6,11 @@ namespace DAL.Helpers
 {
     public class SQLHelper : ISQLHelper
     {
-        public string ConnectionString { get; set; }
+        private string connectionString { get; set; }
 
         public SQLHelper()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            this.connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
         }
 
         public SqlParameter CreateParameter(string name, object value, DbType dbType)
@@ -25,9 +25,14 @@ namespace DAL.Helpers
             };
         }
 
-        public void Delete(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null)
+        public string GetConnectionString()
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            return this.connectionString;
+        }
+
+    public void Delete(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null)
+        {
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -49,7 +54,7 @@ namespace DAL.Helpers
 
         public DataSet GetDataSet(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -74,7 +79,7 @@ namespace DAL.Helpers
 
         public DataTable GetDataTable(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -99,7 +104,7 @@ namespace DAL.Helpers
 
         public void Insert(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -121,7 +126,7 @@ namespace DAL.Helpers
 
         public void Update(string commandText, CommandType commandType, SqlParameter[] sqlParameters)
         {
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 

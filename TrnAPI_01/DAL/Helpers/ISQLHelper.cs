@@ -8,6 +8,7 @@ namespace DAL.Helpers
         SqlParameter CreateParameter(string name, object value, DbType dbType);
         DataTable GetDataTable(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null);
         DataSet GetDataSet(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null);
+        string GetConnectionString();
 
         void Delete(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null);
         void Insert(string commandText, CommandType commandType, SqlParameter[] sqlParameters = null);
