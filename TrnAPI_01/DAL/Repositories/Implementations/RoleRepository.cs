@@ -24,7 +24,7 @@ namespace DAL.Repositories.Implementations
                 helper.CreateParameter("@Name", item.Name, DbType.String)
             };
 
-            helper.Insert("CreateCategory", CommandType.StoredProcedure, parameters.ToArray());
+            helper.Insert("CreateRole", CommandType.StoredProcedure, parameters.ToArray());
         }
 
         public void Delete(int id)
@@ -86,6 +86,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetRoleById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)

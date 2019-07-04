@@ -1,6 +1,6 @@
 USE [aspnetTrainingDB]
 GO
-CREATE PROCEDURE [dbo].[GetCaetories]
+CREATE PROCEDURE [dbo].[GetCategories]
 AS
 BEGIN
 		SET NOCOUNT ON;

@@ -17,9 +17,9 @@ namespace TrnAPI_01.Controllers
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IHttpActionResult Get()
         {
-            return userService.GetAll();
+            return Ok(userService.GetAll());
         }
 
         // GET api/<controller>/5

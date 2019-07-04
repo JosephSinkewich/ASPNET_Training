@@ -89,6 +89,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetEventById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
@@ -112,6 +113,12 @@ namespace DAL.Repositories.Implementations
         public IEnumerable<Event> GetEventsByRecordId(int recordId)
         {
             var events = new List<Event>();
+            
+            var parameters = new List<SqlParameter>
+            {
+                helper.CreateParameter("@RecordId", recordId, DbType.Int32)
+            };
+
             using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
                 connection.Open();
@@ -119,6 +126,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetEventsByRecordId", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)

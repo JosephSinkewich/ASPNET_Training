@@ -8,6 +8,6 @@ CREATE PROCEDURE [dbo].[CreateRole]
 		@Name nvarchar(50)
 AS
 BEGIN
-		INSERT INTO dbo.Records (Name)
+		INSERT INTO dbo.Roles (Name)
 		VALUES (@Name);
 END
