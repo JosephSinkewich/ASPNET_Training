@@ -17,9 +17,9 @@ namespace TrnAPI_01.Controllers
 
         // GET api/<controller>
         [HttpGet]
-        public IEnumerable<Category> Get()
+        public IHttpActionResult Get()
         {
-            return categoryService.GetAll();
+            return Ok(categoryService.GetAll());
         }
 
         // GET api/<controller>/5

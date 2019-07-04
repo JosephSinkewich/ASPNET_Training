@@ -4,3 +4,9 @@ D:\Workshop\source\repos\TrnAPI_01\Common\obj\Debug\Common.csprojAssemblyReferen
 D:\Workshop\source\repos\TrnAPI_01\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\Workshop\source\repos\TrnAPI_01\Common\obj\Debug\Common.dll
 D:\Workshop\source\repos\TrnAPI_01\Common\obj\Debug\Common.pdb
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\bin\Debug\Common.dll
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\bin\Debug\Common.pdb
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\obj\Debug\Common.csprojAssemblyReference.cache
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\obj\Debug\Common.dll
+D:\GitHub\ASPNET_Training\TrnAPI_01\Common\obj\Debug\Common.pdb

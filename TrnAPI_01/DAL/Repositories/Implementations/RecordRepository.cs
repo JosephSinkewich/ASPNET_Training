@@ -94,6 +94,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetRecordById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
@@ -120,6 +121,12 @@ namespace DAL.Repositories.Implementations
         public IEnumerable<Record> GetRecordsByCategoryId(int categoryId)
         {
             var records = new List<Record>();
+
+            var parameters = new List<SqlParameter>
+            {
+                helper.CreateParameter("@CategoryId", categoryId, DbType.Int32)
+            };
+
             using (var connection = new SqlConnection(helper.GetConnectionString()))
             {
                 connection.Open();
@@ -127,6 +134,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetRecordsByCategoryId", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)

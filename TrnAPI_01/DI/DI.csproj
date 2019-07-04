@@ -106,10 +106,6 @@
       <Project>{397b5336-5ef1-47f9-932a-46fbfd0dc97a}</Project>
       <Name>DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TrnAPI_01\TrnAPI_01.csproj">
-      <Project>{30a94b48-65ee-42e7-b786-10e10b0e8599}</Project>
-      <Name>TrnAPI_01</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

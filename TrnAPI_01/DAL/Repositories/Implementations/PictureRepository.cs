@@ -87,6 +87,7 @@ namespace DAL.Repositories.Implementations
                 using (var command = new SqlCommand("GetPictureById", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddRange(parameters.ToArray());
                     SqlDataReader reader = command.ExecuteReader();
 
                     if (reader.HasRows)
