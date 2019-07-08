@@ -44,8 +44,7 @@ namespace TrnAPI_01.Controllers
             }
             Event eventInst = new Event
             {
-                Name = model.Name,
-                RecordId = model.RecordId
+                Name = model.Name
             };
 
             eventService.Create(eventInst);
@@ -76,6 +75,15 @@ namespace TrnAPI_01.Controllers
         {
             eventService.Delete(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/event/getbyrecordid/{recordId:int}")]
+        public IHttpActionResult GetByRecordId(int recordId)
+        {
+            IEnumerable<Event> events = eventService.GetEventsByRecordId(recordId);
+
+            return Ok(events);
         }
     }
 }

@@ -23,7 +23,6 @@ namespace DAL.Repositories.Implementations
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Name", item.Name, DbType.String),
-                helper.CreateParameter("@RecordId", item.RecordId, DbType.Int32)
             };
 
             helper.Insert("CreateEvent", CommandType.StoredProcedure, parameters.ToArray());
@@ -58,8 +57,7 @@ namespace DAL.Repositories.Implementations
                             var eventInst = new Event
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                Name = reader["Name"].ToString(),
-                                RecordId = Convert.ToInt32(reader["RecordId"])
+                                Name = reader["Name"].ToString()
                             };
 
                             events.Add(eventInst);
@@ -98,8 +96,7 @@ namespace DAL.Repositories.Implementations
                         eventInst = new Event
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            Name = reader["Name"].ToString(),
-                            RecordId = Convert.ToInt32(reader["RecordId"])
+                            Name = reader["Name"].ToString()
                         };
                     }
 
@@ -136,8 +133,7 @@ namespace DAL.Repositories.Implementations
                             var eventInst = new Event
                             {
                                 Id = Convert.ToInt32(reader["Id"]),
-                                Name = reader["Name"].ToString(),
-                                RecordId = Convert.ToInt32(reader["RecordId"])
+                                Name = reader["Name"].ToString()
                             };
 
                             events.Add(eventInst);
@@ -156,8 +152,7 @@ namespace DAL.Repositories.Implementations
             var parameters = new List<SqlParameter>
             {
                 helper.CreateParameter("@Id", item.Id, DbType.Int32),
-                helper.CreateParameter("@Name", item.Name, DbType.String),
-                helper.CreateParameter("@RecordId", item.RecordId, DbType.String)
+                helper.CreateParameter("@Name", item.Name, DbType.String)
             };
 
             helper.Update("UpdateEvent", CommandType.StoredProcedure, parameters.ToArray());

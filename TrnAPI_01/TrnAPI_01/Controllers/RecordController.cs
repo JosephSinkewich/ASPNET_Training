@@ -80,5 +80,21 @@ namespace TrnAPI_01.Controllers
             recordService.Delete(id);
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/record/addevent/{recordId:int},{eventId:int}")]
+        public IHttpActionResult AddEvent(int recordId, int eventId)
+        {
+            recordService.AddEvent(recordId, eventId);
+            return Ok();
+        }
+
+        [HttpDelete]
+        [Route("api/record/removeevent/{recordId:int},{eventId:int}")]
+        public IHttpActionResult RemoveEvent(int recordId, int eventId)
+        {
+            recordService.RemoveEvent(recordId, eventId);
+            return Ok();
+        }
     }
 }

@@ -18,6 +18,28 @@ namespace DAL.Repositories.Implementations
             this.helper = helper;
         }
 
+        public void AddEvent(int recordId, int eventId)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                helper.CreateParameter("@RecordId", recordId, DbType.Int32),
+                helper.CreateParameter("@EventId", eventId, DbType.Int32)
+            };
+
+            helper.Insert("CreateRecordEventRelation", CommandType.StoredProcedure, parameters.ToArray());
+        }
+        
+        public void RemoveEvent(int recordId, int eventId)
+        {
+            var parameters = new List<SqlParameter>
+            {
+                helper.CreateParameter("@RecordId", recordId, DbType.Int32),
+                helper.CreateParameter("@EventId", eventId, DbType.Int32)
+            };
+
+            helper.Insert("RemoveEventFromRecord", CommandType.StoredProcedure, parameters.ToArray());
+        }
+
         public void Create(Record item)
         {
             var parameters = new List<SqlParameter>
@@ -26,6 +48,7 @@ namespace DAL.Repositories.Implementations
                 helper.CreateParameter("@CreateDate", item.CreateDate, DbType.DateTime),
                 helper.CreateParameter("@Description", item.Description, DbType.String),
                 helper.CreateParameter("@CategoryId", item.CategoryId, DbType.Int32),
+                helper.CreateParameter("@PictureId", item.PictureId, DbType.Int32)
             };
 
             helper.Insert("CreateRecord", CommandType.StoredProcedure, parameters.ToArray());
