@@ -7,7 +7,6 @@ import { RolesComponent } from './roles/roles.component';
 import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
-  
   { path: 'categories', component: CategoriesComponent },
   { path: 'events', component: EventsComponent },
   { path: 'records', component: RecordsComponent },
