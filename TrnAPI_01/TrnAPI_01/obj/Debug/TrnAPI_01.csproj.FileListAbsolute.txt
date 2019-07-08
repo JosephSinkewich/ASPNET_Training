@@ -231,3 +231,6 @@ D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\System.Threading.Tasks.Extensi
 D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\DI.pdb
 D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\DI.dll.config
 D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\System.Threading.Tasks.Extensions.xml
+D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\System.Web.Cors.dll
+D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\System.Web.Http.Cors.dll
+D:\GitHub\ASPNET_Training\TrnAPI_01\TrnAPI_01\bin\System.Web.Http.Cors.xml
