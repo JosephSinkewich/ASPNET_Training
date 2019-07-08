@@ -14,6 +14,16 @@ namespace BLL.Services.Implementations
             this.repository = repository;
         }
 
+        public void AddEvent(int recordId, int eventId)
+        {
+            repository.AddEvent(recordId, eventId);
+        }
+
+        public void RemoveEvent(int recordId, int eventId)
+        {
+            repository.RemoveEvent(recordId, eventId);
+        }
+
         public void Create(Record item)
         {
             repository.Create(item);
