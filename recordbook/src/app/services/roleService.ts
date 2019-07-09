@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Role } from '../model/role';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RoleService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): Role[] {
-        let result: Role[]
-        this.http.get('http://localhost:59387/api/role').subscribe((data:Role[]) => result = data);
-
-        return result;
+    public getAll(): Observable<Role[]> {
+        return this.http.get('http://localhost:59387/api/role');
     }
 
-    public getById(id: number): Role {
-        let result: Role;
-        this.http.get('http://localhost:59387/api/role/' + id).subscribe((data:Role) => result = data);
-
-        return result;
+    public getById(id: number): Observable<Role> {
+        return this.http.get('http://localhost:59387/api/role/' + id);
     }
 
     public add(model: Role) {

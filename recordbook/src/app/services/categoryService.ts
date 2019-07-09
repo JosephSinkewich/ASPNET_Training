@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../model/category';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class CategoryService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): Category[] {
-        let result: Category[]
-        this.http.get('http://localhost:59387/api/category').subscribe((data:Category[]) => result = data);
-
-        return result;
+    public getAll(): Observable<Category[]> {
+        return this.http.get('http://localhost:59387/api/category');
     }
 
-    public getById(id: number): Category {
-        let result: Category;
-        this.http.get('http://localhost:59387/api/category/' + id).subscribe((data:Category) => result = data);
-
-        return result;
+    public getById(id: number): Observable<Category> {
+        return this.http.get('http://localhost:59387/api/category/' + id);
     }
 
     public add(model: Category) {

@@ -10,12 +10,12 @@ import { EventModel } from '../model/eventModel';
 export class EventsComponent implements OnInit {
 
   private events: EventModel[];
+  
 
   constructor(private service: EventService) { }
 
   ngOnInit() {
-    this.events = this.service.getAll();
-    console.log(this.events);
+    this.service.getAll().subscribe((data: EventModel[]) => this.events = data);
   }
 
 }

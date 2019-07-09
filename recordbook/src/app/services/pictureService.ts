@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Picture } from '../model/picture';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class PictureService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): Picture[] {
-        let result: Picture[]
-        this.http.get('http://localhost:59387/api/picture').subscribe((data:Picture[]) => result = data);
-
-        return result;
+    public getAll(): Observable<Picture[]> {
+        return this.http.get('http://localhost:59387/api/picture');
     }
 
-    public getById(id: number): Picture {
-        let result: Picture;
-        this.http.get('http://localhost:59387/api/picture/' + id).subscribe((data:Picture) => result = data);
-
-        return result;
+    public getById(id: number): Observable<Picture> {
+        return this.http.get('http://localhost:59387/api/picture/' + id);
     }
 
     public add(model: Picture) {

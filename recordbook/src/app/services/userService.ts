@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class UserService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): User[] {
-        let result: User[]
-        this.http.get('http://localhost:59387/api/user').subscribe((data:User[]) => result = data);
-
-        return result;
+    public getAll(): Observable<User[]> {
+        return this.http.get('http://localhost:59387/api/user');
     }
 
-    public getById(id: number): User {
-        let result: User;
-        this.http.get('http://localhost:59387/api/user/' + id).subscribe((data:User) => result = data);
-
-        return result;
+    public getById(id: number): Observable<User> {
+        return this.http.get('http://localhost:59387/api/user/' + id);
     }
 
     public add(model: User) {

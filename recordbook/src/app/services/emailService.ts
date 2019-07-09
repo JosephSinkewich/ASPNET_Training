@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Email } from '../model/email';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class EmailService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): Email[] {
-        let result: Email[]
-        this.http.get('http://localhost:59387/api/email').subscribe((data:Email[]) => result = data);
-
-        return result;
+    public getAll(): Observable<Email[]> {
+        return this.http.get('http://localhost:59387/api/email');
     }
 
-    public getById(id: number): Email {
-        let result: Email;
-        this.http.get('http://localhost:59387/api/email/' + id).subscribe((data:Email) => result = data);
-
-        return result;
+    public getById(id: number): Observable<Email> {
+        return this.http.get('http://localhost:59387/api/email/' + id);
     }
 
     public add(model: Email) {

@@ -1,29 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { EventModel } from '../model/EventModel';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class EventService {
+    public constructor(private http: HttpClient) {}
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): EventModel[] {
-        let result: EventModel[]
-        this.http.get('http://localhost:59387/api/event').subscribe((data:EventModel[]) => result = data);
-
-        return result;
+    public getAll(): Observable<EventModel[]> {
+        return this.http.get<EventModel[]>('http://localhost:59387/api/event');
     }
 
-    public getById(id: number): EventModel {
-        let result: EventModel;
-        this.http.get('http://localhost:59387/api/event/' + id).subscribe((data:EventModel) => result = data);
-
-        return result;
+    public getById(id: number):  Observable<EventModel> {
+        return this.http.get('http://localhost:59387/api/event/' + id)
     }
 
-    public getByRecordId(recordId: number): EventModel[] {
-        let result: EventModel[];
-        this.http.get('http://localhost:59387/api/event/GetByRecordId/' + recordId).subscribe((data:EventModel[]) => result = data);
-
-        return result;
+    public getByRecordId(recordId: number): Observable<EventModel[]> {
+        return this.http.get('http://localhost:59387/api/event/GetByRecordId/' + recordId)
     }
 
     public add(model: EventModel) {
@@ -31,7 +26,7 @@ export class EventService {
     }
 
     public edit(model: EventModel) {
-        this.http.put('http://localhost:59387/api/event/' + model.Id, model);
+        this.http.put('http://localhost:59387/api/event/' + model.id, model);
     }
 
     public delete(id: number) {

@@ -1,22 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Record } from '../model/record';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
+@Injectable({
+    providedIn: 'root'
+})
 export class RecordService {
 
     public constructor(private http: HttpClient){}
 
-    public getAll(): Record[] {
-        let result: Record[]
-        this.http.get('http://localhost:59387/api/record').subscribe((data:Record[]) => result = data);
-
-        return result;
+    public getAll(): Observable<Record[]> {
+        return this.http.get('http://localhost:59387/api/record');
     }
 
-    public getById(id: number): Record {
-        let result: Record;
-        this.http.get('http://localhost:59387/api/record/' + id).subscribe((data:Record) => result = data);
-
-        return result;
+    public getById(id: number): Observable<Record> {
+        return this.http.get('http://localhost:59387/api/record/' + id);
     }
 
     public add(model: Record) {
