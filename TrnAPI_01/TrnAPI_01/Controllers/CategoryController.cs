@@ -38,7 +38,7 @@ namespace TrnAPI_01.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody]CreateCategoryViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return BadRequest();
             }
@@ -48,7 +48,7 @@ namespace TrnAPI_01.Controllers
             };
 
             categoryService.Create(category);
-            
+
             return Ok();
         }
 

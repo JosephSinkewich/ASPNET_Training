@@ -240,15 +240,19 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
-      <Project>{0909A5C7-CF5B-4298-816B-AB8694494D4A}</Project>
+    <ProjectReference Include="..\..\..\..\..\GitHub\ASPNET_Training\TrnAPI_01\BLL\BLL.csproj">
+      <Project>{07e4c6e8-9233-4a92-9b85-8a5f75eb8a9c}</Project>
       <Name>BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{95A8F081-D8B9-451C-9013-5127DC3B1670}</Project>
+    <ProjectReference Include="..\..\..\..\..\GitHub\ASPNET_Training\TrnAPI_01\Common\Common.csproj">
+      <Project>{88c0df07-153a-49ef-ae42-71902027fc4f}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DI\DI.csproj">
+    <ProjectReference Include="..\..\..\..\..\GitHub\ASPNET_Training\TrnAPI_01\DAL\DAL.csproj">
+      <Project>{bc1de06f-d4fe-4b38-8ec6-d7c4e8f4d3a7}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\GitHub\ASPNET_Training\TrnAPI_01\DI\DI.csproj">
       <Project>{d3a149f2-62d4-48ee-a25d-ec8058bc0802}</Project>
       <Name>DI</Name>
     </ProjectReference>

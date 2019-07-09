@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{397B5336-5EF1-47F9-932A-46FBFD0DC97A}</ProjectGuid>
+    <ProjectGuid>{BC1DE06F-D4FE-4B38-8EC6-D7C4E8F4D3A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL</RootNamespace>
@@ -61,10 +61,9 @@
     <Compile Include="Repositories\Interfaces\IRoleRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{95a8f081-d8b9-451c-9013-5127dc3b1670}</Project>
+      <Project>{88c0df07-153a-49ef-ae42-71902027fc4f}</Project>
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>

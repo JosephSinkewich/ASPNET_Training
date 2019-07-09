@@ -22,8 +22,8 @@ namespace TrnAPI_01.Controllers
             return Ok(recordService.GetAll());
         }
 
-       // GET api/<controller>/5
-       [HttpGet]
+        // GET api/<controller>/5
+        [HttpGet]
         public IHttpActionResult Get(int id)
         {
             Record record = recordService.GetById(id);
