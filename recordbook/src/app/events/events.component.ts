@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../services/eventService';
+import { EventService } from "../services/eventService";
 import { EventModel } from '../model/eventModel';
 
 @Component({
@@ -10,12 +10,21 @@ import { EventModel } from '../model/eventModel';
 export class EventsComponent implements OnInit {
 
   private events: EventModel[];
-  
+  private newEvent: EventModel;
 
   constructor(private service: EventService) { }
 
   ngOnInit() {
-    this.service.getAll().subscribe((data: EventModel[]) => this.events = data);
+    this.newEvent = new EventModel();
+    this.service.getAllEvents().subscribe((data: EventModel[]) => this.events = data);
+  }
+
+  onAdd() {
+    this.service.addEvent(this.newEvent).subscribe();
+  }
+
+  onDelete(model: EventModel) {
+    this.service.deleteEvent(model.id).subscribe();
   }
 
 }

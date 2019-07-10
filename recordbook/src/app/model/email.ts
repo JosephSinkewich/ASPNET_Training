@@ -1,5 +1,5 @@
 export class Email {
     
-    public Id: number;
-    public Address: string;
+    public id: number;
+    public address: string;
 }

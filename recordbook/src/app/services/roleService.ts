@@ -2,31 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Role } from '../model/role';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
 
 @Injectable({
     providedIn: 'root'
 })
-export class RoleService {
+export class RoleService extends SimpleService<Role> {
+    private urlSuffics = 'role';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<Role[]> {
-        return this.http.get('http://localhost:59387/api/role');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<Role> {
-        return this.http.get('http://localhost:59387/api/role/' + id);
+    public getAllRoles(): Observable<Role[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: Role) {
-        this.http.post('http://localhost:59387/api/role/', model);
+    public getRoleById(id: number): Observable<Role> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: Role) {
-        this.http.put('http://localhost:59387/api/role/' + model.Id, model);
+    public updateRole(model: Role): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/role/' + id);
+    public addRole(model: Role): Observable<Role> {
+        return super.add(this.urlSuffics, model);
     }
+
+    public deleteRole(id: number): Observable<Role> {
+        return super.delete(this.urlSuffics, id);
+    }
+
 }

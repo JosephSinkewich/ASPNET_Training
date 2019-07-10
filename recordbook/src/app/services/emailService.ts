@@ -2,31 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Email } from '../model/email';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
 
 @Injectable({
     providedIn: 'root'
 })
-export class EmailService {
+export class EmailService extends SimpleService<Email> {
+    private urlSuffics = 'email';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<Email[]> {
-        return this.http.get('http://localhost:59387/api/email');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<Email> {
-        return this.http.get('http://localhost:59387/api/email/' + id);
+    public getAllEmails(): Observable<Email[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: Email) {
-        this.http.post('http://localhost:59387/api/email/', model);
+    public getEmailById(id: number): Observable<Email> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: Email) {
-        this.http.put('http://localhost:59387/api/email/' + model.Id, model);
+    public updateEmail(model: Email): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/email/' + id);
+    public addEmail(model: Email): Observable<Email> {
+        return super.add(this.urlSuffics, model);
     }
+
+    public deleteEmail(id: number): Observable<Email> {
+        return super.delete(this.urlSuffics, id);
+    }
+
 }

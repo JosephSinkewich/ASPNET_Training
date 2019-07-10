@@ -14,23 +14,23 @@
   <tr>
     <td></td>
     <td>
-      <input type="text" value="" />
+      <input type="text" [(ngModel)]="newEvent.name" placeholder="name" />
     </td>
     <td>
-      <input type="button" value="add" />
+      <input type="button" value="add" (click)="onAdd()" />
     </td>
   </tr>
 
   <ng-template ngFor let-item [ngForOf]="events">
       <tr>
         <td>
-          {{item.Id}}
+          {{item.id}}
         </td>
         <td>
-          {{item.Name}}
+          {{item.name}}
         </td>
         <td>
-          <input type="button" value="delete" />
+          <input type="button" value="delete" (click)="onDelete(item)" />
         </td>
       </tr>
   </ng-template>

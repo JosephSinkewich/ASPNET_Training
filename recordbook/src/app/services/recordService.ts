@@ -1,40 +1,52 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Record } from '../model/record';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
+import { catchError } from 'rxjs/operators';
+import { EventModel } from '../model/EventModel';
 
 @Injectable({
     providedIn: 'root'
 })
-export class RecordService {
+export class RecordService extends SimpleService<Record> {
+    private urlSuffics = 'record';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<Record[]> {
-        return this.http.get('http://localhost:59387/api/record');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<Record> {
-        return this.http.get('http://localhost:59387/api/record/' + id);
+    public getAllRecords(): Observable<Record[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: Record) {
-        this.http.post('http://localhost:59387/api/record/', model);
+    public getRecordById(id: number): Observable<Record> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: Record) {
-        this.http.put('http://localhost:59387/api/record/' + model.Id, model);
+    public updateRecord(model: Record): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/record/' + id);
+    public addRecord(model: Record): Observable<Record> {
+        return super.add(this.urlSuffics, model);
     }
 
-    public addEvent(recordId: number, eventId: number) {
-        this.http.post('http://localhost:59387/api/record/addevent/' + recordId + ',' + eventId, null);
+    public deleteRecord(id: number): Observable<Record> {
+        return super.delete(this.urlSuffics, id);
     }
 
-    public removeEvent(recordId: number, eventId: number) {
-        this.http.delete('http://localhost:59387/api/record/removeevent/' + recordId + ',' + eventId);
+    public addEvent(recordId: number, eventId: number): Observable<EventModel> {
+        const url = `${this.baseUrl}/${this.urlSuffics}/addevent/${recordId},${eventId}`;
+        return this.http.post<EventModel>(url, null).pipe(catchError(this.handleError<EventModel>(`addEventToRecord recordId=${recordId}`)));
+    }
+    
+    public removeEvent(recordId: number, eventId: number): Observable<EventModel> {
+        const url = `${this.baseUrl}/${this.urlSuffics}/removeevent/${recordId},${eventId}`;
+        const httpOptions = {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        };
+        return this.http.delete<EventModel>(url, httpOptions)
+            .pipe(catchError(this.handleError<EventModel>(`addEventToRecord recordId=${recordId}`)));
     }
 }

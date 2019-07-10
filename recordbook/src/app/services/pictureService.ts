@@ -2,31 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Picture } from '../model/picture';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
 
 @Injectable({
     providedIn: 'root'
 })
-export class PictureService {
+export class PictureService extends SimpleService<Picture> {
+    private urlSuffics = 'picture';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<Picture[]> {
-        return this.http.get('http://localhost:59387/api/picture');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<Picture> {
-        return this.http.get('http://localhost:59387/api/picture/' + id);
+    public getAllPictures(): Observable<Picture[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: Picture) {
-        this.http.post('http://localhost:59387/api/picture/', model);
+    public getPictureById(id: number): Observable<Picture> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: Picture) {
-        this.http.put('http://localhost:59387/api/picture/' + model.Id, model);
+    public updatePicture(model: Picture): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/picture/' + id);
+    public addPicture(model: Picture): Observable<Picture> {
+        return super.add(this.urlSuffics, model);
     }
+
+    public deletePicture(id: number): Observable<Picture> {
+        return super.delete(this.urlSuffics, id);
+    }
+
 }

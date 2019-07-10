@@ -2,31 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../model/user';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
 
 @Injectable({
     providedIn: 'root'
 })
-export class UserService {
+export class UserService extends SimpleService<User> {
+    private urlSuffics = 'user';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<User[]> {
-        return this.http.get('http://localhost:59387/api/user');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<User> {
-        return this.http.get('http://localhost:59387/api/user/' + id);
+    public getAllUsers(): Observable<User[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: User) {
-        this.http.post('http://localhost:59387/api/user/', model);
+    public getUserById(id: number): Observable<User> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: User) {
-        this.http.put('http://localhost:59387/api/user/' + model.Id, model);
+    public updateUser(model: User): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/user/' + id);
+    public addUser(model: User): Observable<User> {
+        return super.add(this.urlSuffics, model);
     }
+
+    public deleteUser(id: number): Observable<User> {
+        return super.delete(this.urlSuffics, id);
+    }
+
 }

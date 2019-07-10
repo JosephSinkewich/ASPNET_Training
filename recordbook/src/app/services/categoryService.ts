@@ -2,31 +2,36 @@ import { HttpClient } from '@angular/common/http';
 import { Category } from '../model/category';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SimpleService } from './simpleService';
 
 @Injectable({
     providedIn: 'root'
 })
-export class CategoryService {
+export class CategoryService extends SimpleService<Category> {
+    private urlSuffics = 'category';
 
-    public constructor(private http: HttpClient){}
-
-    public getAll(): Observable<Category[]> {
-        return this.http.get('http://localhost:59387/api/category');
+    constructor(private http: HttpClient) {
+        super(http);
     }
 
-    public getById(id: number): Observable<Category> {
-        return this.http.get('http://localhost:59387/api/category/' + id);
+    public getAllCategories(): Observable<Category[]> {
+        return super.getAll(this.urlSuffics);
     }
 
-    public add(model: Category) {
-        this.http.post('http://localhost:59387/api/category/', model);
+    public getCategoryById(id: number): Observable<Category> {
+        return super.getById(this.urlSuffics, id);
     }
 
-    public edit(model: Category) {
-        this.http.put('http://localhost:59387/api/category/' + model.Id, model);
+    public updateCategory(model: Category): Observable<any> {
+        return super.update(this.urlSuffics, model, model.id);
     }
 
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/category/' + id);
+    public addCategory(model: Category): Observable<Category> {
+        return super.add(this.urlSuffics, model);
     }
+
+    public deleteCategory(id: number): Observable<Category> {
+        return super.delete(this.urlSuffics, id);
+    }
+
 }

@@ -10,7 +10,7 @@ import { RecordsComponent } from './records/records.component';
 import { UsersComponent } from './users/users.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { RolesComponent } from './roles/roles.component';
-import { EventService } from './services/eventService';
+import { EventService } from "./services/eventService";
 
 @NgModule({
   declarations: [

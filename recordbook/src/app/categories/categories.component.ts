@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CategoryService } from '../services/categoryService';
+import { Category } from '../model/category';
 
 @Component({
   selector: 'app-categories',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesComponent implements OnInit {
 
-  constructor() { }
+  private newCategory: Category;
+  private categories: Category[];
+
+  constructor(private service: CategoryService) { }
 
   ngOnInit() {
+    this.newCategory = new Category();
+    this.service.getAllCategories().subscribe((data: Category[]) => this.categories = data);
+  }
+
+  onAdd() {
+    this.service.addCategory(this.newCategory).subscribe();
+  }
+
+  onDelete(model: Category) {
+    this.service.deleteCategory(model.id).subscribe();
   }
 
 }

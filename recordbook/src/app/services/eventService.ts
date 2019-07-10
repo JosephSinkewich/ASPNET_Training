@@ -1,35 +1,34 @@
-import { HttpClient } from '@angular/common/http';
-import { EventModel } from '../model/EventModel';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { EventModel } from '../model/EventModel';
+import { SimpleService } from './simpleService';
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class EventService {
-    public constructor(private http: HttpClient) {}
-
-    public getAll(): Observable<EventModel[]> {
-        return this.http.get<EventModel[]>('http://localhost:59387/api/event');
-    }
-
-    public getById(id: number):  Observable<EventModel> {
-        return this.http.get('http://localhost:59387/api/event/' + id)
-    }
-
-    public getByRecordId(recordId: number): Observable<EventModel[]> {
-        return this.http.get('http://localhost:59387/api/event/GetByRecordId/' + recordId)
-    }
-
-    public add(model: EventModel) {
-        this.http.post('http://localhost:59387/api/event/', model);
-    }
-
-    public edit(model: EventModel) {
-        this.http.put('http://localhost:59387/api/event/' + model.id, model);
-    }
-
-    public delete(id: number) {
-        this.http.delete('http://localhost:59387/api/event/' + id);
-    }
+export class EventService extends SimpleService<EventModel> {
+  private urlSuffics = 'event';
+  constructor(private http: HttpClient) {
+    super(http);
+  }
+  public getAllEvents(): Observable<EventModel[]> {
+    return super.getAll(this.urlSuffics);
+  }
+  public getEventById(id: number): Observable<EventModel> {
+    return super.getById(this.urlSuffics, id);
+  }
+  public getEventByRecordId(recordId: number): Observable<EventModel[]> {
+    const url = `${this.baseUrl}/${this.urlSuffics}/GetByRecordId/${recordId}`;
+    return this.http.get<EventModel[]>(url).pipe(catchError(this.handleError<EventModel[]>(`getEventByRecordId id=${recordId}`)));
+  }
+  public updateEvent(model: EventModel): Observable<any> {
+    return super.update(this.urlSuffics, model, model.id);
+  }
+  public addEvent(model: EventModel): Observable<EventModel> {
+    return super.add(this.urlSuffics, model);
+  }
+  public deleteEvent(id: number): Observable<EventModel> {
+    return super.delete(this.urlSuffics, id);
+  }
 }

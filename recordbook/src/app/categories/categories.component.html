@@ -1,3 +1,37 @@
-<p>
-  categories works!
-</p>
+<h2>Categories</h2>
+
+<table>
+  <tr>
+    <td>
+      Id
+    </td>
+    <td>
+      Name
+    </td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td></td>
+    <td>
+      <input type="text" [(ngModel)]="newCategory.name" placeholder="name" />
+    </td>
+    <td>
+      <input type="button" value="add" (click)="onAdd()" />
+    </td>
+  </tr>
+
+  <ng-template ngFor let-item [ngForOf]="categories">
+      <tr>
+        <td>
+          {{item.id}}
+        </td>
+        <td>
+          {{item.name}}
+        </td>
+        <td>
+          <input type="button" value="delete" (click)="onDelete(item)" />
+        </td>
+      </tr>
+  </ng-template>
+</table>
