@@ -23,7 +23,7 @@ export class RoleService extends SimpleService<Role> {
     }
 
     public updateRole(model: Role): Observable<any> {
-        return super.update(this.urlSuffics, model, model.id);
+        return super.update(this.urlSuffics, model, model.Id);
     }
 
     public addRole(model: Role): Observable<Role> {

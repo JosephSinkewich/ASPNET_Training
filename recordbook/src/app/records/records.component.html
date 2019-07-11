@@ -1,3 +1,40 @@
-<p>
-  records works!
-</p>
+<h2>Records</h2>
+
+<input type="button" value="addRecord" (click)="onAdd()" />
+
+<ng-template ngFor let-item [ngForOf]="records">
+  <table border="1">
+    <tr>
+      <td colspan="2">
+        <h3>{{item.Name}}</h3>
+        <input type="button" value="Edit" (click)="onEdit(item.Id)" />
+        <input type="button" value="Delete" (click)="onDelete(item.Id)" />
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <img src="http://p2.music.126.net/FAMK_wAUFZs8N3LzBEfe5g==/18618030394976555.jpg" alt="Record Picture" width="100" height="100" />
+      </td>
+      <td colspan="1">
+        <div>Category: {{item.CategoryId}}</div>
+        <div>
+          Events:
+          <div *ngFor="let event of getEventsByRecordId(item.Id)">
+            lox
+            {{event.Name}}
+          </div>
+        </div>
+        <div>
+          CreateDate: {{item.CreateDate}}
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        {{item.Description}}
+      </td>
+    </tr>
+  </table>
+</ng-template>

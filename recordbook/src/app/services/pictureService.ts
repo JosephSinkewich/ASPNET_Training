@@ -23,7 +23,7 @@ export class PictureService extends SimpleService<Picture> {
     }
 
     public updatePicture(model: Picture): Observable<any> {
-        return super.update(this.urlSuffics, model, model.id);
+        return super.update(this.urlSuffics, model, model.Id);
     }
 
     public addPicture(model: Picture): Observable<Picture> {

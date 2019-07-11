@@ -1,5 +1,5 @@
 export class Picture {
     
-    public id: number;
-    public path: string;
+    public Id: number;
+    public Path: string;
 }

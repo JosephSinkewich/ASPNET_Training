@@ -24,13 +24,13 @@
   <ng-template ngFor let-item [ngForOf]="categories">
       <tr>
         <td>
-          {{item.id}}
+          {{item.Id}}
         </td>
         <td>
-          {{item.name}}
+          {{item.Name}}
         </td>
         <td>
-          <input type="button" value="delete" (click)="onDelete(item)" />
+          <input type="button" value="delete" (click)="onDelete(item.Id)" />
         </td>
       </tr>
   </ng-template>

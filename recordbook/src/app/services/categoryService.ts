@@ -8,6 +8,7 @@ import { SimpleService } from './simpleService';
     providedIn: 'root'
 })
 export class CategoryService extends SimpleService<Category> {
+
     private urlSuffics = 'category';
 
     constructor(private http: HttpClient) {
@@ -23,7 +24,7 @@ export class CategoryService extends SimpleService<Category> {
     }
 
     public updateCategory(model: Category): Observable<any> {
-        return super.update(this.urlSuffics, model, model.id);
+        return super.update(this.urlSuffics, model, model.Id);
     }
 
     public addCategory(model: Category): Observable<Category> {

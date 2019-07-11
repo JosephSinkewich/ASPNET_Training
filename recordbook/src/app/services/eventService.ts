@@ -23,7 +23,7 @@ export class EventService extends SimpleService<EventModel> {
     return this.http.get<EventModel[]>(url).pipe(catchError(this.handleError<EventModel[]>(`getEventByRecordId id=${recordId}`)));
   }
   public updateEvent(model: EventModel): Observable<any> {
-    return super.update(this.urlSuffics, model, model.id);
+    return super.update(this.urlSuffics, model, model.Id);
   }
   public addEvent(model: EventModel): Observable<EventModel> {
     return super.add(this.urlSuffics, model);

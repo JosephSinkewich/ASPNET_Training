@@ -23,8 +23,8 @@ export class EventsComponent implements OnInit {
     this.service.addEvent(this.newEvent).subscribe();
   }
 
-  onDelete(model: EventModel) {
-    this.service.deleteEvent(model.id).subscribe();
+  onDelete(id: number) {
+    this.service.deleteEvent(id).subscribe();
   }
 
 }

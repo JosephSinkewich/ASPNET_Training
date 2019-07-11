@@ -23,7 +23,7 @@ export class EmailService extends SimpleService<Email> {
     }
 
     public updateEmail(model: Email): Observable<any> {
-        return super.update(this.urlSuffics, model, model.id);
+        return super.update(this.urlSuffics, model, model.Id);
     }
 
     public addEmail(model: Email): Observable<Email> {

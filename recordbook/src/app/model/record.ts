@@ -1,9 +1,9 @@
 export class Record {
     
-    public id: number;
-    public name: string;
-    public createDate: Date;
-    public description: string;
-    public categoryId: number;
-    public pictureId :number;
+    public Id: number;
+    public Name: string;
+    public CreateDate: Date;
+    public Description: string;
+    public CategoryId: number;
+    public PictureId :number;
 }

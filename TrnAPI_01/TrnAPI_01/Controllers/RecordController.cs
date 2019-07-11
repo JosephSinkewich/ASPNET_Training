@@ -1,6 +1,5 @@
 ﻿using BLL.Services.Interfaces;
 using Common.Model;
-using System.Collections.Generic;
 using System.Web.Http;
 using TrnAPI_01.Models;
 

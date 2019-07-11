@@ -23,7 +23,7 @@ export class UserService extends SimpleService<User> {
     }
 
     public updateUser(model: User): Observable<any> {
-        return super.update(this.urlSuffics, model, model.id);
+        return super.update(this.urlSuffics, model, model.Id);
     }
 
     public addUser(model: User): Observable<User> {

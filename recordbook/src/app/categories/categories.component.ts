@@ -23,8 +23,8 @@ export class CategoriesComponent implements OnInit {
     this.service.addCategory(this.newCategory).subscribe();
   }
 
-  onDelete(model: Category) {
-    this.service.deleteCategory(model.id).subscribe();
+  onDelete(id: number) {
+    this.service.deleteCategory(id).subscribe();
   }
 
 }
